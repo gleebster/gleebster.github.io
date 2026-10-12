@@ -17,7 +17,9 @@
 		  } else if (rj.length == 0) {
 		    document.getElementById("text").innerText = "user not found";
 		  } else {
-		    window.location.href="https://twitch.tv/"+rj[0]['login'];
+			let l = "https://twitch.tv/"+rj[0]['login'];
+			document.getElementById("text").innerHTML = "Redirecting to <a href=\""+l+"\">"+l+"</a>...";
+			window.location.href = l;
 		  }
 	    }
 	  }
