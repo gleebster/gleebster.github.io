@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+	  Twitch user redirector
+	</title>
+    <script>
+      async function load() {
+	    let id = new URL(window.location.href).searchParams.get("id");
+	    if (id === null || id.length == 0) {
+		  document.getElementById("text").innerText = "couldnt find id in link";
+	    } else {
+          let r = await fetch("https://api.ivr.fi/v2/twitch/user?id="+id);
+		  let rj = await r.json();
+		  if (!r.ok) {
+		    document.getElementById("text").innerText = rj['error']['message'];
+		  } else if (rj.length == 0) {
+		    document.getElementById("text").innerText = "user not found";
+		  } else {
+		    window.location.href="https://twitch.tv/"+rj[0]['login'];
+		  }
+	    }
+	  }
+    </script>
+  </head>
+  <body onload="load()" style="background-color:black;color:white;font-family:Roboto">
+    <h1 align="center" id="text">Looking up user...</h1>
+  </body>
+</html>
