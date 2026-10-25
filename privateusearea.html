@@ -5,6 +5,29 @@
 	    e000-f8ff character viewer
 	  </title>
     <script>
+		
+		function clipboardCopy(text) {
+		    var fakeElement = document.createElement('textarea');
+		    fakeElement.style.fontSize = '12pt';
+		    fakeElement.style.border = '0';
+		    fakeElement.style.padding = '0';
+		    fakeElement.style.margin = '0';
+		    fakeElement.style.position = 'absolute';
+		    fakeElement.style['left'] = '-9999px';
+		    fakeElement.style.top = `${window.pageYOffset || document.documentElement.scrollTop}px`;
+		    fakeElement.setAttribute('readonly', '');
+		    fakeElement.value = text;
+		    document.body.appendChild(fakeElement);
+		    try {
+		        fakeElement.select();
+		        document.execCommand("copy");
+		        notify(`Copied ${text} to the clipboard.`);
+		    } catch (err) {
+		        notify("Copy failed :(");
+		        console.log(err);
+		    }
+		    fakeElement.remove();
+		}
       async function load() {
   	    const fonts2check = new Set([
           // Windows 10
