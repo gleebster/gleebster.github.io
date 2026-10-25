@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+	    e000-f8ff character viewer
+	  </title>
+    <script>
+      async function load() {
+  	    const fonts2check = new Set([
+          // Windows 10
+          'Arial', 'Arial Black', 'Bahnschrift', 'Calibri', 'Cambria', 'Cambria Math', 'Candara', 'Comic Sans MS', 'Consolas', 'Constantia', 'Corbel', 'Courier New', 'Ebrima', 'Franklin Gothic Medium', 'Gabriola', 'Gadugi', 'Georgia', 'HoloLens MDL2 Assets', 'Impact', 'Ink Free', 'Javanese Text', 'Leelawadee UI', 'Lucida Console', 'Lucida Sans Unicode', 'Malgun Gothic', 'Marlett', 'Microsoft Himalaya', 'Microsoft JhengHei', 'Microsoft New Tai Lue', 'Microsoft PhagsPa', 'Microsoft Sans Serif', 'Microsoft Tai Le', 'Microsoft YaHei', 'Microsoft Yi Baiti', 'MingLiU-ExtB', 'Mongolian Baiti', 'MS Gothic', 'MV Boli', 'Myanmar Text', 'Nirmala UI', 'Palatino Linotype', 'Segoe MDL2 Assets', 'Segoe Print', 'Segoe Script', 'Segoe UI', 'Segoe UI Historic', 'Segoe UI Emoji', 'Segoe UI Symbol', 'SimSun', 'Sitka', 'Sylfaen', 'Symbol', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'Webdings', 'Wingdings', 'Yu Gothic',
+          // macOS
+          'American Typewriter', 'Andale Mono', 'Arial', 'Arial Black', 'Arial Narrow', 'Arial Rounded MT Bold', 'Arial Unicode MS', 'Avenir', 'Avenir Next', 'Avenir Next Condensed', 'Baskerville', 'Big Caslon', 'Bodoni 72', 'Bodoni 72 Oldstyle', 'Bodoni 72 Smallcaps', 'Bradley Hand', 'Brush Script MT', 'Chalkboard', 'Chalkboard SE', 'Chalkduster', 'Charter', 'Cochin', 'Comic Sans MS', 'Copperplate', 'Courier', 'Courier New', 'Didot', 'DIN Alternate', 'DIN Condensed', 'Futura', 'Geneva', 'Georgia', 'Gill Sans', 'Helvetica', 'Helvetica Neue', 'Herculanum', 'Hoefler Text', 'Impact', 'Lucida Grande', 'Luminari', 'Marker Felt', 'Menlo', 'Microsoft Sans Serif', 'Monaco', 'Noteworthy', 'Optima', 'Palatino', 'Papyrus', 'Phosphate', 'Rockwell', 'Savoye LET', 'SignPainter', 'Skia', 'Snell Roundhand', 'Tahoma', 'Times', 'Times New Roman', 'Trattatello', 'Trebuchet MS', 'Verdana', 'Zapfino',
+          'Roboto', 'Noto Color Emoji', 'Open Sans',
+        ].sort());
+        await document.fonts.ready;
+
+        const fontsAvailable = new Set();
+      
+        for (const font of fonts2check.values()) {
+          if (!fontsAvailable.has(font) && document.fonts.check(`12px "${font}"`)) {
+            fontsAvailable.add(font);
+          }
+        }
+
+        document.getElementById("text").innerText = "Got " + fontsAvailable.size + " fonts, building character list...";
+
+        const start = 0xE000;
+        const end = 0xF8FF;
+
+        const container = document.getElementById('the-stuff');
+        for (let c = start; c <= end; c += 1) {
+          let cx = c.toString(16);
+          let cc = String.fromCodePoint(c);
+          let e = "<a class=\"button char-small\" href=\"https://unicode-explorer.com/c/"+cx+"\" title=\"U+E175\"><div>"+cc+"</div><div class=\"sub\">U+"+cx+"</div><div class=\"mini-copy-button\" data-text=\""+cc+"\" title=\"Copy\">C</div></a>";
+          container.innerHTML += e;
+        }
+
+        document.querySelectorAll(".mini-copy-button").forEach(element => {
+          element.addEventListener('click', function (event) {
+            event.preventDefault();
+            clipboardCopy(element.dataset.text);
+          });
+        });
+	    }
+    </script>
+    <style>
+      .button, button {
+      	cursor: pointer;
+      	display: inline-block;
+      	letter-spacing: .1rem;
+      	text-decoration: none;
+      }
+
+      .char-small {
+      	position: relative;
+      	color: #606c76;
+      	background-color: #fff;
+      	border: .1rem solid #9b4dca;
+      	border-radius: .2rem;
+      	font-size: 50px;
+      	font-weight: 100;
+      	width: 95px;
+      	height: 95px;
+      	text-align: center;
+      	line-height: 87px;
+      	margin: 4px;
+      	padding: 4px;
+      	text-transform: none;
+      	white-space: nowrap;
+      	overflow: hidden;
+      }
+      .char-small .sub {
+      	position: absolute;
+      	font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+      	font-size: 9px;
+      	line-height: 9px;
+      	left: 2px;
+      	right: 2px;
+      	bottom: 2px;
+      	opacity: 0.75;
+      }
+      .char-small .mini-copy-button {
+      	display: none;
+      	position: absolute;
+      	left: 0px;
+      	top: 0px;
+      	width: 24px;
+      	height: 24px;
+      	line-height: 24px;
+      	font-size: 24px;
+      	border-radius: 0;
+      	padding: 0px;
+      	color: #fff;
+      	background-color: #9b4dca;
+      }
+    </style>
+  </head>
+  <body onload="load()" style="background-color:black;color:white;font-family:Roboto">
+    <h2 align="center">e000-f8ff character viewer</h2>
+    <h1 align="center" id="text">Getting available fonts...</h1>
+    <div id="the-stuff"></div>
+  </body>
+</html>
