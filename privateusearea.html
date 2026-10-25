@@ -21,9 +21,7 @@
 		    try {
 		        fakeElement.select();
 		        document.execCommand("copy");
-		        notify(`Copied ${text} to the clipboard.`);
 		    } catch (err) {
-		        notify("Copy failed :(");
 		        console.log(err);
 		    }
 		    fakeElement.remove();
