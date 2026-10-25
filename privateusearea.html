@@ -53,7 +53,7 @@
         for (let c = start; c <= end; c += 1) {
           let cx = c.toString(16);
           let cc = String.fromCodePoint(c);
-          let e = "<a class=\"button char-small\" href=\"https://unicode-explorer.com/c/"+cx+"\" title=\"U+"+cx+"\"><div>"+cc+"</div><div class=\"sub\">U+"+cx+"</div><div class=\"mini-copy-button\" data-text=\""+cc+"\" title=\"Copy\">C</div></a>";
+          let e = "<a class=\"button char-small\" href=\"https://unicode-explorer.com/c/"+cx+"\" title=\"U+"+cx+"\"><div>"+cc+"</div><div class=\"sub\">U+"+cx+"</div><div class=\"mini-copy-button\" data-text=\""+cc+"\" title=\"Copy\">C</div></a> ";
           container.innerHTML += e;
         }
 
@@ -133,6 +133,6 @@
   <body onload="load()" style="background-color:black;color:white;font-family:Roboto">
     <h2 align="center">e000-f8ff character viewer</h2>
     <h1 align="center" id="text">Getting available fonts...</h1>
-    <div id="the-stuff"></div>
+    <div style="display:flex"><div width="25%"></div><div id="the-stuff"></div></div>
   </body>
 </html>
