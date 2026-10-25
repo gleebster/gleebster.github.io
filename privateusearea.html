@@ -18,9 +18,9 @@
         const fontsAvailable = new Set();
       
         for (const font of fonts2check.values()) {
-          if (!fontsAvailable.has(font) && document.fonts.check(`12px "${font}"`)) {
-            fontsAvailable.add(font);
-          }
+          //if (!fontsAvailable.has(font) && document.fonts.check(`12px "${font}"`)) {
+          //  fontsAvailable.add(font);
+          //}
         }
 
         document.getElementById("text").innerText = "Got " + fontsAvailable.size + " fonts, building character list...";
